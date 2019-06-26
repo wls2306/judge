@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcu.judge.mapper.AnswerMapper">
+  <resultMap id="BaseResultMap" type="com.bcu.judge.pojo.Answer">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="answer_id" jdbcType="VARCHAR" property="answerId" />
+    <result column="answer_exam_id" jdbcType="VARCHAR" property="answerExamId" />
+    <result column="answer_user_id" jdbcType="VARCHAR" property="answerUserId" />
+    <result column="answer_que_id" jdbcType="VARCHAR" property="answerQueId" />
+    <result column="answer_content" jdbcType="VARCHAR" property="answerContent" />
+    <result column="answer_is_right" jdbcType="VARCHAR" property="answerIsRight" />
+    <result column="answer_right_answer" jdbcType="VARCHAR" property="answerRightAnswer" />
+    <result column="answer_score" jdbcType="VARCHAR" property="answerScore" />
+    <result column="answer_que_score" jdbcType="VARCHAR" property="answerQueScore" />
+    <result column="answer_judge_username" jdbcType="VARCHAR" property="answerJudgeUsername" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, answer_id, answer_exam_id, answer_user_id, answer_que_id, answer_content, answer_is_right, 
+    answer_right_answer, answer_score, answer_que_score, answer_judge_username
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from answer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from answer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bcu.judge.pojo.Answer" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into answer (answer_id, answer_exam_id, answer_user_id, 
+      answer_que_id, answer_content, answer_is_right, 
+      answer_right_answer, answer_score, answer_que_score, 
+      answer_judge_username)
+    values (#{answerId,jdbcType=VARCHAR}, #{answerExamId,jdbcType=VARCHAR}, #{answerUserId,jdbcType=VARCHAR}, 
+      #{answerQueId,jdbcType=VARCHAR}, #{answerContent,jdbcType=VARCHAR}, #{answerIsRight,jdbcType=VARCHAR}, 
+      #{answerRightAnswer,jdbcType=VARCHAR}, #{answerScore,jdbcType=VARCHAR}, #{answerQueScore,jdbcType=VARCHAR}, 
+      #{answerJudgeUsername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.bcu.judge.pojo.Answer" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="answerId != null">
+        answer_id,
+      </if>
+      <if test="answerExamId != null">
+        answer_exam_id,
+      </if>
+      <if test="answerUserId != null">
+        answer_user_id,
+      </if>
+      <if test="answerQueId != null">
+        answer_que_id,
+      </if>
+      <if test="answerContent != null">
+        answer_content,
+      </if>
+      <if test="answerIsRight != null">
+        answer_is_right,
+      </if>
+      <if test="answerRightAnswer != null">
+        answer_right_answer,
+      </if>
+      <if test="answerScore != null">
+        answer_score,
+      </if>
+      <if test="answerQueScore != null">
+        answer_que_score,
+      </if>
+      <if test="answerJudgeUsername != null">
+        answer_judge_username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="answerId != null">
+        #{answerId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerExamId != null">
+        #{answerExamId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerUserId != null">
+        #{answerUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerQueId != null">
+        #{answerQueId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerContent != null">
+        #{answerContent,jdbcType=VARCHAR},
+      </if>
+      <if test="answerIsRight != null">
+        #{answerIsRight,jdbcType=VARCHAR},
+      </if>
+      <if test="answerRightAnswer != null">
+        #{answerRightAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="answerScore != null">
+        #{answerScore,jdbcType=VARCHAR},
+      </if>
+      <if test="answerQueScore != null">
+        #{answerQueScore,jdbcType=VARCHAR},
+      </if>
+      <if test="answerJudgeUsername != null">
+        #{answerJudgeUsername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bcu.judge.pojo.Answer">
+    <!--@mbg.generated-->
+    update answer
+    <set>
+      <if test="answerId != null">
+        answer_id = #{answerId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerExamId != null">
+        answer_exam_id = #{answerExamId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerUserId != null">
+        answer_user_id = #{answerUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerQueId != null">
+        answer_que_id = #{answerQueId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerContent != null">
+        answer_content = #{answerContent,jdbcType=VARCHAR},
+      </if>
+      <if test="answerIsRight != null">
+        answer_is_right = #{answerIsRight,jdbcType=VARCHAR},
+      </if>
+      <if test="answerRightAnswer != null">
+        answer_right_answer = #{answerRightAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="answerScore != null">
+        answer_score = #{answerScore,jdbcType=VARCHAR},
+      </if>
+      <if test="answerQueScore != null">
+        answer_que_score = #{answerQueScore,jdbcType=VARCHAR},
+      </if>
+      <if test="answerJudgeUsername != null">
+        answer_judge_username = #{answerJudgeUsername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bcu.judge.pojo.Answer">
+    <!--@mbg.generated-->
+    update answer
+    set answer_id = #{answerId,jdbcType=VARCHAR},
+      answer_exam_id = #{answerExamId,jdbcType=VARCHAR},
+      answer_user_id = #{answerUserId,jdbcType=VARCHAR},
+      answer_que_id = #{answerQueId,jdbcType=VARCHAR},
+      answer_content = #{answerContent,jdbcType=VARCHAR},
+      answer_is_right = #{answerIsRight,jdbcType=VARCHAR},
+      answer_right_answer = #{answerRightAnswer,jdbcType=VARCHAR},
+      answer_score = #{answerScore,jdbcType=VARCHAR},
+      answer_que_score = #{answerQueScore,jdbcType=VARCHAR},
+      answer_judge_username = #{answerJudgeUsername,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-23-->
+  <select id="selectWrongAnswerByAnswerExamIdAndAnswerUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from answer
+    where answer_exam_id=#{answerExamId,jdbcType=VARCHAR} and answer_user_id=#{answerUserId,jdbcType=VARCHAR} and answer_is_right='0'
+  </select>
+</mapper>

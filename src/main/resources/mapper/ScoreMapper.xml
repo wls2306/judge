@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcu.judge.mapper.ScoreMapper">
+  <resultMap id="BaseResultMap" type="com.bcu.judge.pojo.Score">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="score_id" jdbcType="VARCHAR" property="scoreId" />
+    <result column="score_exam_id" jdbcType="VARCHAR" property="scoreExamId" />
+    <result column="score_user_id" jdbcType="VARCHAR" property="scoreUserId" />
+    <result column="score_user_part" jdbcType="VARCHAR" property="scoreUserPart" />
+    <result column="score_result" jdbcType="VARCHAR" property="scoreResult" />
+    <result column="score_total" jdbcType="VARCHAR" property="scoreTotal" />
+    <result column="score_time" jdbcType="VARCHAR" property="scoreTime" />
+    <result column="score_status" jdbcType="VARCHAR" property="scoreStatus" />
+  </resultMap>
+
+  <resultMap id="special" type="com.bcu.judge.pojo.PartCustomer">
+      <result column="people" jdbcType="VARCHAR" property="count"/>
+      <result column="avg" jdbcType="VARCHAR" property="avg"/>
+      <result column="part_name" jdbcType="VARCHAR" property="partName"/>
+      <result column="part_id" jdbcType="VARCHAR" property="partId"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, score_id, score_exam_id, score_user_id, score_user_part, score_result, score_total, 
+    score_time, score_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from score
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bcu.judge.pojo.Score" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into score (score_id, score_exam_id, score_user_id, 
+      score_user_part, score_result, score_total, 
+      score_time, score_status)
+    values (#{scoreId,jdbcType=VARCHAR}, #{scoreExamId,jdbcType=VARCHAR}, #{scoreUserId,jdbcType=VARCHAR}, 
+      #{scoreUserPart,jdbcType=VARCHAR}, #{scoreResult,jdbcType=VARCHAR}, #{scoreTotal,jdbcType=VARCHAR}, 
+      #{scoreTime,jdbcType=VARCHAR}, #{scoreStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.bcu.judge.pojo.Score" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scoreId != null">
+        score_id,
+      </if>
+      <if test="scoreExamId != null">
+        score_exam_id,
+      </if>
+      <if test="scoreUserId != null">
+        score_user_id,
+      </if>
+      <if test="scoreUserPart != null">
+        score_user_part,
+      </if>
+      <if test="scoreResult != null">
+        score_result,
+      </if>
+      <if test="scoreTotal != null">
+        score_total,
+      </if>
+      <if test="scoreTime != null">
+        score_time,
+      </if>
+      <if test="scoreStatus != null">
+        score_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scoreId != null">
+        #{scoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreExamId != null">
+        #{scoreExamId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreUserId != null">
+        #{scoreUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreUserPart != null">
+        #{scoreUserPart,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreResult != null">
+        #{scoreResult,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTotal != null">
+        #{scoreTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTime != null">
+        #{scoreTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreStatus != null">
+        #{scoreStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bcu.judge.pojo.Score">
+    <!--@mbg.generated-->
+    update score
+    <set>
+      <if test="scoreId != null">
+        score_id = #{scoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreExamId != null">
+        score_exam_id = #{scoreExamId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreUserId != null">
+        score_user_id = #{scoreUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreUserPart != null">
+        score_user_part = #{scoreUserPart,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreResult != null">
+        score_result = #{scoreResult,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTotal != null">
+        score_total = #{scoreTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreTime != null">
+        score_time = #{scoreTime,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreStatus != null">
+        score_status = #{scoreStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bcu.judge.pojo.Score">
+    <!--@mbg.generated-->
+    update score
+    set score_id = #{scoreId,jdbcType=VARCHAR},
+      score_exam_id = #{scoreExamId,jdbcType=VARCHAR},
+      score_user_id = #{scoreUserId,jdbcType=VARCHAR},
+      score_user_part = #{scoreUserPart,jdbcType=VARCHAR},
+      score_result = #{scoreResult,jdbcType=VARCHAR},
+      score_total = #{scoreTotal,jdbcType=VARCHAR},
+      score_time = #{scoreTime,jdbcType=VARCHAR},
+      score_status = #{scoreStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getRankingByExamId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from score
+    where score_exam_id=#{examId,jdbcType=VARCHAR}
+    order by score_result+0 desc ,score_time+0 asc
+
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <select id="selectByScoreExamIdAndScoreUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from score
+    where score_exam_id=#{scoreExamId,jdbcType=VARCHAR} and score_user_id=#{scoreUserId,jdbcType=VARCHAR}
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <select id="selectByScoreUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from score
+    where score_user_id=#{scoreUserId,jdbcType=VARCHAR}
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-24-->
+  <update id="updateScoreStatusByScoreExamId">
+        update score
+        set score_status=#{updatedScoreStatus,jdbcType=VARCHAR}
+        where score_exam_id = #{scoreExamId,jdbcType=VARCHAR}
+    </update>
+
+  <select id="selectScoreByExamIdOrderByGroup" resultMap="special" >
+    select
+           count(score_id) as 'people',avg(score_result) as 'avg',(select part_name from  `part`where part_id=score_user_part) as 'part_name',score_user_part
+    from score
+    where score_exam_id=#{examId}
+    group by score_user_part
+    order by avg(score_result)desc ;
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-24-->
+  <select id="selectDistinctScoreUserPartByScoreExamId" resultType="java.lang.String">
+    select distinct(score_user_part)
+    from score
+    where score_exam_id = #{scoreExamId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getRankingByExamIdAndPartId" resultMap="BaseResultMap">
+    select * from  score   where score_user_part=#{partid} and score_exam_id=#{examid}
+    order by score_result+0 desc,score_time+0 asc limit 0,6
+  </select>
+
+</mapper>

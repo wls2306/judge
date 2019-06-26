@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在线答题系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="http://www.bj-online.com:80/static/style/images/favicon.ico" />
+    <link rel="stylesheet" href="http://www.bj-online.com:80/static/jquery-weui/lib/weui.css">
+    <link rel="stylesheet" href="http://www.bj-online.com:80/static/jquery-weui/css/jquery-weui.css">
+    <link rel="stylesheet" href="http://www.bj-online.com:80/static/jquery-weui/css/swiper.css">
+    <link rel="stylesheet" href="http://www.bj-online.com:80/static/jquery-weui/css/my.css">
+
+    <script src="http://www.bj-online.com:80/static/jquery-weui/lib/jquery-2.1.4.js"></script>
+    <script src="http://www.bj-online.com:80/static/jquery-weui/js/jquery-weui.js"></script>
+    <script src="http://www.bj-online.com:80/static/jquery-weui/layer/layer.js"></script>
+    <script src="http://www.bj-online.com:80/static/jquery-weui/js/swiper.js"></script>
+    <script src="http://www.bj-online.com:80/static/jquery-weui/js/common.js"></script>
+    <script src="http://www.bj-online.com:80/static/style/js/jquery.form.js"></script>
+    <script src="http://www.bj-online.com:80/static/common/common.js"></script>
+    <script type="text/javascript" src="http://www.bj-online.com:80/static/style/js/exam-test.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://www.bj-online.com:80/static/style/js/calculator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://www.bj-online.com:80/static/style/js/examJs.js" charset="utf-8"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript">
+        //答题卡点击
+        $(function() {
+            document.body.onbeforeunload = "ConfirmClose";
+            var qstsize = parseInt('15');
+            maxtime = "600";//最大时间每个页面要自己覆盖此值
+            timer = setInterval("CountDown()",1000);
+            $('input:radio').click(function() {
+                var numinder = $(this).parent().attr("numinder");
+                if (numinder != null) {
+                    $("html,body").animate({
+                        scrollTop : $(this).parent().offset().top + 50
+                    }, 600);
+                }
+            });
+        });
+        function option(id,value,pid){
+            $("#complete"+id).html("（已做过）");
+            $("#answer"+id).val(value);
+        }
+        function optionCheck(id,pid){
+            var chk_value = [];    //获得正确答案
+            $('input[name="answer'+id+'"]:checked').each(function(){
+                chk_value.push($(this).val());
+            });
+            $("#answer"+id).val(chk_value.join(","));
+        }
+        function optionBlank(id,value,pid){
+            $("#answer"+id).val(value);
+        }
+
+        function submitMustPaper(){
+            $.alert("亲，时间到了，您必须交卷了！");
+            var form = $("form[name=paperForm]");
+            var options  = {
+                url:'123',
+                type:'post',
+                success:function(result){
+                    result = $.parseJSON(result);
+                    if(result.success){
+                        $.alert(result.msg);
+                        location.href="http://www.bj-online.com:80/frontmobile/paper/detail?id="+result.obj;
+                    }else{
+                        $.alert(result.msg);
+                    }
+                }
+            };
+            form.ajaxSubmit(options);
+        }
+        function submitPaper(){
+            $.confirm("您确认要提交试卷吗？", function() {
+                //点击确认后的回调函数
+                $.showLoading("正在提交试卷...");
+                var form = $("form[name=paperForm]");
+                var options  = {
+                    url:'123',
+                    type:'post',
+                    success:function(result){
+                        $.hideLoading();
+                        result = $.parseJSON(result);
+                        if(result.success){
+                            $.alert(result.msg);
+                            location.href="123"+result.obj;
+                        }else{
+                            $.alert(result.msg);
+                        }
+                    },
+                    failture:function(e){
+                        $.hideLoading();
+                        $.alert(e);
+                    }
+                };
+                form.ajaxSubmit(options);
+            }, function() {
+                //点击取消后的回调函数
+            });
+        }
+    </script>
+</head>
+<body ontouchstart>
+<div class="page-title">
+    <a href="javascript:history.go(-1);" class="return">返回</a>职业测评的技术与方法</div>
+<form action="123" id="paperForm" name="paperForm" method="post">
+    <!-- 试卷ID -->
+    <input type="hidden" name="paperId" value="84">
+    <!-- 用时 -->
+    <input type="hidden" name="testTime" id="testTime"/>
+    <div class="weui_panel">
+        <!-- 倒计时 -->
+        <div class="weui_panel_hd">倒计时：<span id="timer">0分0秒</span></div>
+        <!-- 问答区 -->
+        <div class="weui_panel_bd">
+
+            <!-- 正常试题（非案例题） -->
+            <div class="weui_media_box weui_media_text">
+                <!-- 题干 -->
+                <h4 class="weui_media_title_auto">
+                    1（单选题）<p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">根据职业指导人员的职业道德,下列哪一项是建立咨询关系时的错误行为?</span></p><p></p><!-- 已做过 -->
+                    <font color="red" id="complete5850"></font>
+                    <!-- 选项内容 -->
+                    <p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（A）与服务对象讨论工作重点,达成一致</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（B）与服务对象达成书面协议</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（C）给服务对象指定职业指导人员</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（D）给服务对象提供建立咨询关系的选择机会</span></p><p></p><!-- 试题ID -->
+                    <input type="hidden" name="id" value="5850">
+                    <!-- 试题题型 -->
+                    <input type="hidden" name="qtype" value="1">
+                    <!-- 试题答案-->
+                    <input type="hidden" name="finalanswers" value="C">
+                    <!-- 试题得分 -->
+                    <input type="hidden" name="pscore" value="5.0">
+                    <!-- 用户回答 -->
+                    <input type="hidden" id="answer5850" name="answer">
+                    <!-- 记录是否案例题 -->
+                    <input type="hidden" name="pid" value="0">
+                </h4>
+                <!-- 用户答题区 -->
+                <!-- 单选题 -->
+                <label for="1_A" numinder="1">
+                    &nbsp;
+                    <input style="opacity:100;height:25px;width:25px;" type="radio"
+                           name="answer5850" id="1_A" value="A"
+                           onclick="option(5850,'A','')">
+                    <span style="font-size:30px;">A</span>
+                </label>
+                <label for="1_B" numinder="1">
+                    &nbsp;
+                    <input style="opacity:100;height:25px;width:25px;" type="radio"
+                           name="answer5850" id="1_B" value="B"
+                           onclick="option(5850,'B','')">
+                    <span style="font-size:30px;">B</span>
+                </label>
+                <label for="1_C" numinder="1">
+                    &nbsp;
+                    <input style="opacity:100;height:25px;width:25px;" type="radio"
+                           name="answer5850" id="1_C" value="C"
+                           onclick="option(5850,'C','')">
+                    <span style="font-size:30px;">C</span>
+                </label>
+                <label for="1_D" numinder="1">
+                    &nbsp;
+                    <input style="opacity:100;height:25px;width:25px;" type="radio"
+                           name="answer5850" id="1_D" value="D"
+                           onclick="option(5850,'D','')">
+                    <span style="font-size:30px;">D</span>
+                </label>
+                <!-- 多选题 -->
+                <!-- 判断题 -->
+            </div>
+            <!-- 填空题 -->
+            <!-- 问答和论述题 -->
+        </div>
+        <!-- 正常试题（非案例题）结束 -->
+        <!-- 案例题 -->
+        <!-- 案例题结束 -->
+        <!-- 正常试题（非案例题） -->
+
+
+    <div class="weui_panel_hd">第2大题&nbsp;&nbsp;&nbsp;每道题5.0分。</div>
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            11（多选题）<p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导的职业守则包括</span></p><p></p><!-- 已做过 -->
+            <font color="red" id="complete5950"></font>
+            <!-- 选项内容 -->
+            <p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（A）热爱本职工作&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（B）刻苦钻研业务 </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（C）遵守国家法律法规 </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（D）坚持以人为本</span></p><p></p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5950">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="2">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A,B,C">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5950" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5950" id="11_A" value="A"
+               onclick="optionCheck(5950,'');">
+        <span style="font-size:30px;">A</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5950" id="11_B" value="B"
+               onclick="optionCheck(5950,'');">
+        <span style="font-size:30px;">B</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5950" id="11_C" value="C"
+               onclick="optionCheck(5950,'');">
+        <span style="font-size:30px;">C</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5950" id="11_D" value="D"
+               onclick="optionCheck(5950,'');">
+        <span style="font-size:30px;">D</span>
+        <!-- 判断题 -->
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            12（多选题）<p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导的操作技能体系包括</span></p><p></p><!-- 已做过 -->
+            <font color="red" id="complete5951"></font>
+            <!-- 选项内容 -->
+            <p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（A）咨询与指导&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（B）信息的采集与处理&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（C）职业素质测评</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（D）职业设计</span></p><p></p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5951">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="2">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A,B,C,D">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5951" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5951" id="12_A" value="A"
+               onclick="optionCheck(5951,'');">
+        <span style="font-size:30px;">A</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5951" id="12_B" value="B"
+               onclick="optionCheck(5951,'');">
+        <span style="font-size:30px;">B</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5951" id="12_C" value="C"
+               onclick="optionCheck(5951,'');">
+        <span style="font-size:30px;">C</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5951" id="12_D" value="D"
+               onclick="optionCheck(5951,'');">
+        <span style="font-size:30px;">D</span>
+        <!-- 判断题 -->
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            13（多选题）<p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导理论模型中两个主要变量是</span></p><p></p><!-- 已做过 -->
+            <font color="red" id="complete5952"></font>
+            <!-- 选项内容 -->
+            <p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（A）求职者&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（B）就业困难人员&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（C）用人单位</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（D）特殊就业困难</span></p><p></p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5952">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="2">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A,C">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5952" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5952" id="13_A" value="A"
+               onclick="optionCheck(5952,'');">
+        <span style="font-size:30px;">A</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5952" id="13_B" value="B"
+               onclick="optionCheck(5952,'');">
+        <span style="font-size:30px;">B</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5952" id="13_C" value="C"
+               onclick="optionCheck(5952,'');">
+        <span style="font-size:30px;">C</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5952" id="13_D" value="D"
+               onclick="optionCheck(5952,'');">
+        <span style="font-size:30px;">D</span>
+        <!-- 判断题 -->
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            14（多选题）<p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导的工作目标包括</span></p><p></p><!-- 已做过 -->
+            <font color="red" id="complete5953"></font>
+            <!-- 选项内容 -->
+            <p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（A）帮助求职者实现就业</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（B）帮助实施职业技能提升&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（C）帮助就业稳定</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（D）帮助实现职业生涯发展</span></p><p></p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5953">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="2">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A,C,D">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5953" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5953" id="14_A" value="A"
+               onclick="optionCheck(5953,'');">
+        <span style="font-size:30px;">A</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5953" id="14_B" value="B"
+               onclick="optionCheck(5953,'');">
+        <span style="font-size:30px;">B</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5953" id="14_C" value="C"
+               onclick="optionCheck(5953,'');">
+        <span style="font-size:30px;">C</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5953" id="14_D" value="D"
+               onclick="optionCheck(5953,'');">
+        <span style="font-size:30px;">D</span>
+        <!-- 判断题 -->
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            15（多选题）<p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">我国职业指导历史发展阶段包括</span></p><p></p><!-- 已做过 -->
+            <font color="red" id="complete5954"></font>
+            <!-- 选项内容 -->
+            <p>&nbsp;</p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（A）萌芽阶段&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（B）孕育阶段&nbsp;&nbsp;&nbsp; </span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（C）发展阶段</span></p><p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">（D）提升阶段</span></p><p></p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5954">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="2">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A,B,C,D">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5954" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5954" id="15_A" value="A"
+               onclick="optionCheck(5954,'');">
+        <span style="font-size:30px;">A</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5954" id="15_B" value="B"
+               onclick="optionCheck(5954,'');">
+        <span style="font-size:30px;">B</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5954" id="15_C" value="C"
+               onclick="optionCheck(5954,'');">
+        <span style="font-size:30px;">C</span>
+        <input style="opacity:100;height:25px;width:25px;" type="checkbox"
+               name="answer5954" id="15_D" value="D"
+               onclick="optionCheck(5954,'');">
+        <span style="font-size:30px;">D</span>
+        <!-- 判断题 -->
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <div class="weui_panel_hd">第3大题&nbsp;&nbsp;&nbsp;每道题5.0分。</div>
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            16（判断题）<p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导的对象是人力资源市场中求职者群体。</span></p><!-- 已做过 -->
+            <font color="red" id="complete5800"></font>
+            <!-- 选项内容 -->
+            <p><span style="FONT-SIZE: 18px">A、对<br/>B、错</span> </p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5800">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="3">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="B">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5800" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <!-- 判断题 -->
+        <label for="16_A" numinder="16">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5800" id="16_A" value="A"
+                   onclick="option(5800,'A','')">
+            <span style="font-size:30px;">A</span>
+        </label>
+        <label for="16_B" numinder="16">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5800" id="16_B" value="B"
+                   onclick="option(5800,'B','')">
+            <span style="font-size:30px;">B</span>
+        </label>
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            17（判断题）<p>&nbsp;<span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导是一个过程，伴随人的整个职业生涯。</span></p><!-- 已做过 -->
+            <font color="red" id="complete5801"></font>
+            <!-- 选项内容 -->
+            <p><span style="FONT-SIZE: 18px">A、对<br/>B、错</span> </p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5801">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="3">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5801" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <!-- 判断题 -->
+        <label for="17_A" numinder="17">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5801" id="17_A" value="A"
+                   onclick="option(5801,'A','')">
+            <span style="font-size:30px;">A</span>
+        </label>
+        <label for="17_B" numinder="17">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5801" id="17_B" value="B"
+                   onclick="option(5801,'B','')">
+            <span style="font-size:30px;">B</span>
+        </label>
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            18（判断题）<p>&nbsp;<span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">孔子、孟子、荀子等以礼制分、尊卑有等的职业分层是我国职业指导思想的启蒙。</span></p><!-- 已做过 -->
+            <font color="red" id="complete5802"></font>
+            <!-- 选项内容 -->
+            <p><span style="FONT-SIZE: 18px">A、对<br/>B、错</span> </p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5802">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="3">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5802" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <!-- 判断题 -->
+        <label for="18_A" numinder="18">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5802" id="18_A" value="A"
+                   onclick="option(5802,'A','')">
+            <span style="font-size:30px;">A</span>
+        </label>
+        <label for="18_B" numinder="18">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5802" id="18_B" value="B"
+                   onclick="option(5802,'B','')">
+            <span style="font-size:30px;">B</span>
+        </label>
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            19（判断题）<p><span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业道德是任何一个从业人员在从事该职业需要遵守的最基本的标准或者是行业标准。</span></p><!-- 已做过 -->
+            <font color="red" id="complete5803"></font>
+            <!-- 选项内容 -->
+            <p><span style="FONT-SIZE: 18px">A、对<br/>B、错</span> </p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5803">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="3">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5803" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <!-- 判断题 -->
+        <label for="19_A" numinder="19">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5803" id="19_A" value="A"
+                   onclick="option(5803,'A','')">
+            <span style="font-size:30px;">A</span>
+        </label>
+        <label for="19_B" numinder="19">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5803" id="19_B" value="B"
+                   onclick="option(5803,'B','')">
+            <span style="font-size:30px;">B</span>
+        </label>
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    <!-- 正常试题（非案例题） -->
+    <div class="weui_media_box weui_media_text">
+        <!-- 题干 -->
+        <h4 class="weui_media_title_auto">
+            20（判断题）<p>&nbsp;<span style="FONT-FAMILY: 宋体; FONT-SIZE: 16px">职业指导本身的工作不是万能的，我们要为服务对象解释我们的工作职责。</span></p><!-- 已做过 -->
+            <font color="red" id="complete5804"></font>
+            <!-- 选项内容 -->
+            <p><span style="FONT-SIZE: 18px">A、对<br/>B、错</span> </p><!-- 试题ID -->
+            <input type="hidden" name="id" value="5804">
+            <!-- 试题题型 -->
+            <input type="hidden" name="qtype" value="3">
+            <!-- 试题答案-->
+            <input type="hidden" name="finalanswers" value="A">
+            <!-- 试题得分 -->
+            <input type="hidden" name="pscore" value="5.0">
+            <!-- 用户回答 -->
+            <input type="hidden" id="answer5804" name="answer">
+            <!-- 记录是否案例题 -->
+            <input type="hidden" name="pid" value="0">
+        </h4>
+        <!-- 用户答题区 -->
+        <!-- 单选题 -->
+        <!-- 多选题 -->
+        <!-- 判断题 -->
+        <label for="20_A" numinder="20">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5804" id="20_A" value="A"
+                   onclick="option(5804,'A','')">
+            <span style="font-size:30px;">A</span>
+        </label>
+        <label for="20_B" numinder="20">
+            <input style="opacity:100;height:25px;width:25px;" type="radio"
+                   name="answer5804" id="20_B" value="B"
+                   onclick="option(5804,'B','')">
+            <span style="font-size:30px;">B</span>
+        </label>
+    </div>
+    <!-- 填空题 -->
+    <!-- 问答和论述题 -->
+    </div>
+    <!-- 正常试题（非案例题）结束 -->
+    <!-- 案例题 -->
+    <!-- 案例题结束 -->
+    </div>
+</form>
+<div class='content-padded'>
+    <a href="javascript:submitPaper();" class="weui_btn weui_btn_primary">提交试卷</a>
+    <a href="javascript:history.go(-1);" class="weui_btn weui_btn_default">返        回</a>
+</div>
+</body>
+</html>

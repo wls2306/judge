@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+debug: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bcu_judge?useUnicode=true&characterEncoding=utf8&useSSL=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+  devtools:
+      restart:
+        enabled: true
+        additional-paths: src/main/java
+  freemarker:
+    expose-request-attributes: true
+    request-context-attribute: request
+    cache: false
+    charset: UTF-8
+    content-type: text/html
+    enabled: true
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.bcu.judge.pojo
+
+
+
+
+
+logging:
+  path: ./logs/
+  level:
+    com.bcu.judge.mapper: debug

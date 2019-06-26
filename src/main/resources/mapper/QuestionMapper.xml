@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcu.judge.mapper.QuestionMapper">
+  <resultMap id="BaseResultMap" type="com.bcu.judge.pojo.Question">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="que_id" jdbcType="VARCHAR" property="queId" />
+    <result column="que_paper_id" jdbcType="VARCHAR" property="quePaperId" />
+    <result column="que_part" jdbcType="VARCHAR" property="quePart" />
+    <result column="que_content" jdbcType="VARCHAR" property="queContent" />
+    <result column="que_answer" jdbcType="VARCHAR" property="queAnswer" />
+    <result column="que_score" jdbcType="VARCHAR" property="queScore" />
+    <result column="que_type" jdbcType="VARCHAR" property="queType" />
+    <result column="que_auto_judge" jdbcType="VARCHAR" property="queAutoJudge" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, que_id, que_paper_id, que_part, que_content, que_answer, que_score, que_type, 
+    que_auto_judge
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bcu.judge.pojo.Question" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into question (que_id, que_paper_id, que_part, 
+      que_content, que_answer, que_score, 
+      que_type, que_auto_judge)
+    values (#{queId,jdbcType=VARCHAR}, #{quePaperId,jdbcType=VARCHAR}, #{quePart,jdbcType=VARCHAR}, 
+      #{queContent,jdbcType=VARCHAR}, #{queAnswer,jdbcType=VARCHAR}, #{queScore,jdbcType=VARCHAR}, 
+      #{queType,jdbcType=VARCHAR}, #{queAutoJudge,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.bcu.judge.pojo.Question" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="queId != null">
+        que_id,
+      </if>
+      <if test="quePaperId != null">
+        que_paper_id,
+      </if>
+      <if test="quePart != null">
+        que_part,
+      </if>
+      <if test="queContent != null">
+        que_content,
+      </if>
+      <if test="queAnswer != null">
+        que_answer,
+      </if>
+      <if test="queScore != null">
+        que_score,
+      </if>
+      <if test="queType != null">
+        que_type,
+      </if>
+      <if test="queAutoJudge != null">
+        que_auto_judge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="queId != null">
+        #{queId,jdbcType=VARCHAR},
+      </if>
+      <if test="quePaperId != null">
+        #{quePaperId,jdbcType=VARCHAR},
+      </if>
+      <if test="quePart != null">
+        #{quePart,jdbcType=VARCHAR},
+      </if>
+      <if test="queContent != null">
+        #{queContent,jdbcType=VARCHAR},
+      </if>
+      <if test="queAnswer != null">
+        #{queAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="queScore != null">
+        #{queScore,jdbcType=VARCHAR},
+      </if>
+      <if test="queType != null">
+        #{queType,jdbcType=VARCHAR},
+      </if>
+      <if test="queAutoJudge != null">
+        #{queAutoJudge,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bcu.judge.pojo.Question">
+    <!--@mbg.generated-->
+    update question
+    <set>
+      <if test="queId != null">
+        que_id = #{queId,jdbcType=VARCHAR},
+      </if>
+      <if test="quePaperId != null">
+        que_paper_id = #{quePaperId,jdbcType=VARCHAR},
+      </if>
+      <if test="quePart != null">
+        que_part = #{quePart,jdbcType=VARCHAR},
+      </if>
+      <if test="queContent != null">
+        que_content = #{queContent,jdbcType=VARCHAR},
+      </if>
+      <if test="queAnswer != null">
+        que_answer = #{queAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="queScore != null">
+        que_score = #{queScore,jdbcType=VARCHAR},
+      </if>
+      <if test="queType != null">
+        que_type = #{queType,jdbcType=VARCHAR},
+      </if>
+      <if test="queAutoJudge != null">
+        que_auto_judge = #{queAutoJudge,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bcu.judge.pojo.Question">
+    <!--@mbg.generated-->
+    update question
+    set que_id = #{queId,jdbcType=VARCHAR},
+      que_paper_id = #{quePaperId,jdbcType=VARCHAR},
+      que_part = #{quePart,jdbcType=VARCHAR},
+      que_content = #{queContent,jdbcType=VARCHAR},
+      que_answer = #{queAnswer,jdbcType=VARCHAR},
+      que_score = #{queScore,jdbcType=VARCHAR},
+      que_type = #{queType,jdbcType=VARCHAR},
+      que_auto_judge = #{queAutoJudge,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <select id="selectByQuePaperId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from question
+    where que_paper_id=#{quePaperId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectQuestionCountByPaperId" resultType="int">
+    select  count(que_id) from  question where que_paper_id=#{quePaperId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectQuesionIndexByPaperId" resultType="string">
+    select min(que_id) from question where  que_paper_id=#{quePaperId,jdbcType=VARCHAR}
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <select id="selectByQueId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from question
+    where que_id=#{queId,jdbcType=VARCHAR}
+  </select>
+</mapper>

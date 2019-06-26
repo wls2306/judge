@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bcu.judge.mapper.ExamUserMapper">
+  <resultMap id="BaseResultMap" type="com.bcu.judge.pojo.ExamUser">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="exam_id" jdbcType="VARCHAR" property="examId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="has_enter" jdbcType="VARCHAR" property="hasEnter" />
+    <result column="enter_time" jdbcType="TIMESTAMP" property="enterTime" />
+    <result column="has_submit" jdbcType="VARCHAR" property="hasSubmit" />
+    <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+  </resultMap>
+
+  <resultMap id="ExamRequestMap" type="com.bcu.judge.pojo.Exam">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="exam_id" jdbcType="VARCHAR" property="examId"/>
+    <result column="exam_paper_id" jdbcType="VARCHAR" property="examPaperId"/>
+    <result column="exam_name" jdbcType="VARCHAR" property="examName"/>
+    <result column="exam_desc" jdbcType="VARCHAR" property="examDesc"/>
+    <result column="exam_status" jdbcType="VARCHAR" property="examStatus"/>
+    <result column="exam_time" jdbcType="TIMESTAMP" property="examTime"/>
+  </resultMap>
+
+
+
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, exam_id, user_id, has_enter, enter_time, has_submit, submit_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from exam_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from exam_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bcu.judge.pojo.ExamUser">
+    <!--@mbg.generated-->
+    insert into exam_user (id, exam_id, user_id, 
+      has_enter, enter_time, has_submit, 
+      submit_time)
+    values (#{id,jdbcType=INTEGER}, #{examId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{hasEnter,jdbcType=VARCHAR}, #{enterTime,jdbcType=TIMESTAMP}, #{hasSubmit,jdbcType=VARCHAR}, 
+      #{submitTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bcu.judge.pojo.ExamUser">
+    <!--@mbg.generated-->
+    insert into exam_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="examId != null">
+        exam_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="hasEnter != null">
+        has_enter,
+      </if>
+      <if test="enterTime != null">
+        enter_time,
+      </if>
+      <if test="hasSubmit != null">
+        has_submit,
+      </if>
+      <if test="submitTime != null">
+        submit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="examId != null">
+        #{examId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="hasEnter != null">
+        #{hasEnter,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null">
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasSubmit != null">
+        #{hasSubmit,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null">
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bcu.judge.pojo.ExamUser">
+    <!--@mbg.generated-->
+    update exam_user
+    <set>
+      <if test="examId != null">
+        exam_id = #{examId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="hasEnter != null">
+        has_enter = #{hasEnter,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null">
+        enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hasSubmit != null">
+        has_submit = #{hasSubmit,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null">
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bcu.judge.pojo.ExamUser">
+    <!--@mbg.generated-->
+    update exam_user
+    set exam_id = #{examId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      has_enter = #{hasEnter,jdbcType=VARCHAR},
+      enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      has_submit = #{hasSubmit,jdbcType=VARCHAR},
+      submit_time = #{submitTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-21-->
+  <select id="selectByUserId" resultMap="ExamRequestMap">
+    select
+      e.exam_id,e.exam_name,e.exam_status,e.exam_time,e.exam_paper_id,e.id
+    from
+         exam_user u,exam e
+    where
+          user_id=#{userId,jdbcType=VARCHAR} and u.exam_id = e.exam_id
+  </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <update id="updateHasEnterAndEnterTimeByExamIdAndUserId">
+        update exam_user
+        set has_enter=1,
+            enter_time=current_timestamp
+        where exam_id = #{examId,jdbcType=VARCHAR}
+          and user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <update id="updateHasSubmitAndSubmitTimeByExamIdAndUserId">
+        update exam_user
+        set has_submit='1',
+            submit_time=current_timestamp
+        where exam_id = #{examId,jdbcType=VARCHAR}
+          and user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+
+<!--auto generated by MybatisCodeHelper on 2019-06-22-->
+  <select id="selectByExamIdAndUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from exam_user
+    where exam_id=#{examId,jdbcType=VARCHAR} and user_id=#{userId,jdbcType=VARCHAR}
+  </select>
+
+  <!--auto generated by MybatisCodeHelper on 2019-06-21-->
+
+
+  <select id="getUnsubmitUserNameByExamId" resultType="string">
+        select (select user_name from user where user.user_id = exam_user.user_id) from  exam_user
+        where has_submit='0' and exam_id=#{examid}
+  </select>
+</mapper>
